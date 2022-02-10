@@ -1,0 +1,15 @@
+export const Three_soft_drink = require('./Three_soft_drink.png');
+export const Head_icon = require('./Head_icon.png');
+export const X_icon = require('./X_icon.png');
+export const Up_icon = require('./Up_icon.png');
+export const Cry_icon = require('./Cry_icon.png');
+export const Home_background = require('./Home_background.png');
+export const Game_background = require('./Game_background.png');
+export const Congratulation_background = require('./Congratulation_background.png');
+export const Scan_background = require('./Scan_background.png');
+export const Background = require('./Background.png');
+export const Button_red = require('./Button_red.png');
+export const Button_white = require('./Button_white.png');
+export const Button_off = require('./Button_off.png');
+export const Button_play = require('./Button_play.png');
+export const goback = require('./goback.png');
