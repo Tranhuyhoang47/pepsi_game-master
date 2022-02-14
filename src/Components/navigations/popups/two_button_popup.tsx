@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '70%',
-    height: '30%',
+    height: '35%',
     backgroundColor: '#fcd01e',
     borderRadius: 10,
     alignItems: 'center',
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   buttonsContainer: {
-    marginTop: windowHeight * 0.02,
+    marginTop: windowHeight * 0.01,
   },
   closeButon: {
     alignSelf: 'flex-end',

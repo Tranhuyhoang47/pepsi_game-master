@@ -13,3 +13,4 @@ export const Button_white = require('./Button_white.png');
 export const Button_off = require('./Button_off.png');
 export const Button_play = require('./Button_play.png');
 export const goback = require('./goback.png');
+export const Logout_button = require('./logout-button.png')

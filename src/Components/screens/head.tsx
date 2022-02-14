@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,  
 } from 'react-native';
-import {goback, X_icon} from '../../assets//images/index';
+import {goback, Logout_button} from '../../assets//images/index';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = (props: any) => {
     if (rightButton === true) {
       return (
         <TouchableOpacity onPress={onPress}>
-          <Image source={X_icon} />
+          <Image source={Logout_button} />
         </TouchableOpacity>
       );
     } else {

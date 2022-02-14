@@ -51,7 +51,7 @@ const Home_Screens: React.FC = (props: any) => {
 
   const navigateToGame = (playType: string) => {
     dispatch(setPlay(playType));
-    navigation.navigate('');
+    navigation.navigate('gamePlay');
     setPtsModalVisible(!ptsModalVisible);
   };
 
@@ -155,6 +155,8 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     alignItems: 'center',
+    right:35,
+    top:15,
   },
   contentContainer: {
     flex: 9,
