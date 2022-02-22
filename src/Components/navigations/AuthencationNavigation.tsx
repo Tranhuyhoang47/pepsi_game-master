@@ -18,7 +18,7 @@ export const AuthencationNavigator: React.FC = () => {
             <Stack.Screen name="Sign_in" component={SignIn}/>
             <Stack.Screen name="Commit" component={commit}/>
             <Stack.Screen name="OtpNotification" component={OtpNotification}/>
-            <Stack.Screen name="Home_screen" component={Home_Screens}/>
+            <Stack.Screen name="Home_Screens" component={Home_Screens}/>
             {/* <Stack.Screen name="gamePlay" component={gamePlay}/> */}
         </Stack.Navigator>
     );

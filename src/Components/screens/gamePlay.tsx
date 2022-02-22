@@ -39,12 +39,12 @@ const gamePlay: React.FC = (props: any) => {
   const onFinish = () => {
     if (playType === 'exchange') {
       dispatch(decrementExchange());
-      navigation.navigate('Congratulation');
+      navigation.navigate('');
     } else if (playType === 'free') {
       dispatch(decrementFree());
-      navigation.navigate('Congratulation');
+      navigation.navigate('');
     } else {
-      navigation.navigate('Main screen');
+      navigation.navigate('');
     }
   };
 
@@ -64,7 +64,7 @@ const gamePlay: React.FC = (props: any) => {
             onPressRightButton={() => {
               setLogoutModalVisible(!logoutModalVisible);
             }}
-          />
+          />  
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.informationContainer}>
