@@ -1,19 +1,29 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {View, StyleSheet, Text, Modal, Dimensions} from 'react-native';
 import ClickButton from '../Button/clickbutton';
 import { Button_white } from '../../../assets/images/index';
+import {useSelector, useDispatch} from 'react-redux';
+import {RootState} from '../../../redux/synthetic';
+import { signOut } from '../../../redux/actions/authentication.actions';
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export interface LogoutPopup {
+export interface ExitPopup {
   onPressConfirm?: () => void;
   onPressCanel?: () => void;
   visible: boolean;
 }
 
-const ExitPopup: React.FC<LogoutPopup> = props => {
+const ExitPopup: React.FC<ExitPopup> = props => {
   const {onPressConfirm, onPressCanel, visible} = props;
+  const dispatch = useDispatch();
+
+  const handleConfirm = () => {
+    dispatch(signOut());
+  };
+
   return (
     <Modal transparent visible={visible} animationType="fade">
       <View style={styles.container}>
@@ -31,7 +41,7 @@ const ExitPopup: React.FC<LogoutPopup> = props => {
               titleStyle={styles.textConfirmButton}
               activeStyle={styles.confirmButton}
               disabled={false}
-              onPress={onPressConfirm}
+              onPress={handleConfirm}
             />
             <ClickButton
               title="Huỷ"

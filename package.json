@@ -23,6 +23,8 @@
     "react-native-gesture-handler": "^2.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-numeric-input": "^1.9.0",
+    "react-native-permissions": "^3.3.1",
+    "react-native-qrcode-scanner": "^1.5.5",
     "react-native-reanimated": "^2.4.1",
     "react-native-safe-area-context": "^3.4.1",
     "react-native-screens": "^3.12.0",

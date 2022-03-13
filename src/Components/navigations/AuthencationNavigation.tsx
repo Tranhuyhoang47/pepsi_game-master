@@ -8,7 +8,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import App from "../../../App";
 import Home_Screens from "../screens/Home_screen";
 import gamePlay from "../screens/gamePlay";
-
+import Congratulation from "../screens/Congratulation";
 const Stack = createStackNavigator();
 
 export const AuthencationNavigator: React.FC = () => {
@@ -19,7 +19,8 @@ export const AuthencationNavigator: React.FC = () => {
             <Stack.Screen name="Commit" component={commit}/>
             <Stack.Screen name="OtpNotification" component={OtpNotification}/>
             <Stack.Screen name="Home_Screens" component={Home_Screens}/>
-            {/* <Stack.Screen name="gamePlay" component={gamePlay}/> */}
+            <Stack.Screen name="gamePlay" component={gamePlay}/>
+            <Stack.Screen name="Congratulation" component={Congratulation}/>
         </Stack.Navigator>
     );
 };

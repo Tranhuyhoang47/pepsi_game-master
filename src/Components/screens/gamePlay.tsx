@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
   StyleSheet,
-  SafeAreaView,
   View,
   Text,
   Dimensions,
@@ -28,25 +27,27 @@ const gamePlay: React.FC = (props: any) => {
     (state: RootState) => state.timeplay.current_play_type,
   );
   const playTimesExchange = useSelector(
-    (state: RootState) => state.timeplay.timeplay_exchange,
+    (state: RootState) => state.timeplay.user.timeplay_exchange,
   );
   const playTimesFree = useSelector(
-    (state: RootState) => state.timeplay.timeplay_free,
+    (state: RootState) => state.timeplay.user.timeplay_free,
   );
+
 
   const dispatch = useDispatch();
 
   const onFinish = () => {
     if (playType === 'exchange') {
       dispatch(decrementExchange());
-      navigation.navigate('');
+      navigation.navigate('Congratulation');
     } else if (playType === 'free') {
       dispatch(decrementFree());
-      navigation.navigate('');
+      navigation.navigate('Congratulation');
     } else {
-      navigation.navigate('');
+      navigation.navigate('Congratulation');
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -91,7 +92,6 @@ const gamePlay: React.FC = (props: any) => {
           visible={logoutModalVisible}
           onPressConfirm={() => {
             setLogoutModalVisible(!logoutModalVisible);
-            navigation.popToTop();
           }}
           onPressCanel={() => setLogoutModalVisible(!logoutModalVisible)}
         />
