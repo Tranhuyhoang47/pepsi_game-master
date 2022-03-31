@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1022426819311",
+    "project_id": "otp-react-916de",
+    "storage_bucket": "otp-react-916de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022426819311:android:5d910b23a6e63ffafec91a",
+        "android_client_info": {
+          "package_name": "com.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022426819311-th1p54jnrhgdtjoas4fl1tmke1hpb3i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCve64pw4GuaRVOwo1TbR4i_pWUb0hXh74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022426819311-th1p54jnrhgdtjoas4fl1tmke1hpb3i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

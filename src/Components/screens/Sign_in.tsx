@@ -1,6 +1,17 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Button, Alert, ImageBackground,StatusBar,Dimensions} from 'react-native';
-import {Button_white, Background, Button_off} from '../../assets/images';
+import React, {useEffect, useState} from 'react';
+import {
+  View, 
+  Text,
+  StyleSheet,
+  TextInput,
+  ActivityIndicator, 
+  Alert, 
+  ImageBackground,
+  Dimensions} from 'react-native';
+import {
+  Button_white, 
+  Background, 
+  Button_off} from '../../assets/images';
 import ClickButton from '../navigations/Button/clickbutton.signin';
 import ClickButton1 from '../navigations/Button/Clickbutton1';
 
@@ -40,7 +51,7 @@ const SignIn: React.FC = (props: any) => {
         >
         <ClickButton
           title="Lấy mã OTP"
-          onPress={() => navigation.navigate('Home_screen')}
+          onPress={() => navigation.navigate('gamePlay')}
         />
         </ImageBackground>
         </View>

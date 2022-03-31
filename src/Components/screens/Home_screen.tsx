@@ -8,7 +8,7 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import {RootState} from '../../redux/synthetic';
+import {RootState} from '../../redux/store';
 import {useSelector, useDispatch} from 'react-redux';
 import ClickButton from '../navigations/Button/clickbutton';
 import {
@@ -20,7 +20,7 @@ import {
 import LogoutPopup from '../navigations/popups/exit_popup';
 import ChoosePlayTime from '../navigations/popups/two_button_popup';
 import Header from './head';
-import {setPlay} from '../../redux/play';
+import {setPlayType} from '../../redux/slices/authorized';
 import EndOfPlay from '../navigations/popups/one_button_popup';
 
 const windowWidth = Dimensions.get('window').width;
@@ -28,12 +28,15 @@ const windowHeight = Dimensions.get('window').height;
 
 const Home_Screens: React.FC = (props: any) => {
   const {navigation} = props;
-  const playTimesExchange = useSelector(
-    (state: RootState) => state.timeplay.timeplay_exchange,
-  );
-  const playTimesFree = useSelector(
-    (state: RootState) => state.timeplay.timeplay_free,
-  );
+  const user = useSelector((state: RootState) => state.authorized.user);
+  const playTimesExchange = user.play_time_exchange;
+  const playTimesFree = user.play_time_free;
+  // const playTimesExchange = useSelector(
+  //   (state: RootState) => state..timeplay_exchange,
+  // );
+  // const playTimesFree = useSelector(
+  //   (state: RootState) => state.timeplay.timeplay_free,
+  // );
   const dispatch = useDispatch();
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const [ptsModalVisible, setPtsModalVisible] = useState(false);
@@ -49,24 +52,24 @@ const Home_Screens: React.FC = (props: any) => {
     );
   };
 
-  // const navigateToGame = (playType: string) => {
-  //   dispatch(setPlay(playType));
-  //   navigation.navigate('');
-  //   setPtsModalVisible(!ptsModalVisible);
-  // };
+  const navigateToGame = (playType: string) => {
+    dispatch(setPlayType(playType));
+    navigation.navigate('');
+    setPtsModalVisible(!ptsModalVisible);
+  };
 
   const navigateToScanCode = () => {
     navigation.navigate('');
     setOptModalVisible(!optModalVisible);
   };
 
-  // const selectModal = () => {
-  //   if (playTimesExchange > 0 || playTimesFree > 0) {
-  //     setPtsModalVisible(!ptsModalVisible);
-  //   } else {
-  //     setOptModalVisible(!optModalVisible);
-  //   }
-  // };
+  const selectModal = () => {
+    if (playTimesExchange > 0 || playTimesFree > 0) {
+      setPtsModalVisible(!ptsModalVisible);
+    } else {
+      setOptModalVisible(!optModalVisible);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -92,11 +95,11 @@ const Home_Screens: React.FC = (props: any) => {
             <ClickButton
               title={'Chơi ngay'}
               activeStyle={styles.buttonRed}
-              onPress={navigation.navigate('gamePlay.tsx')}
-              // subComponent={renderPlayTimesLeft(
-              //   playTimesExchange + playTimesFree,
-              // )}
-              // onPress={selectModal}
+              // onPress={navigation.navigate('')}
+              subComponent={renderPlayTimesLeft(
+                playTimesExchange + playTimesFree,
+              )}
+              onPress={selectModal}
               backgroundImage={Button_play}
             />
             <ClickButton
@@ -123,22 +126,21 @@ const Home_Screens: React.FC = (props: any) => {
             visible={logoutModalVisible}
             onPressConfirm={() => {
               setLogoutModalVisible(!logoutModalVisible);
-              navigation.popToTop();
             }}
             onPressCanel={() => setLogoutModalVisible(!logoutModalVisible)}
           />
-          {/* <ChoosePlayTime
+          <ChoosePlayTime
             visible={ptsModalVisible}
             onClose={() => setPtsModalVisible(!ptsModalVisible)}
             data={{playTimesFree, playTimesExchange}}
-            onPressFirst={() => navigateToGame('gamePlay')}
-            onPressSecond={() => navigateToGame('gamePlay')}
-          /> */}
-          {/* <EndOfPlay
+            onPressFirst={() => navigateToGame('free')}
+            onPressSecond={() => navigateToGame('exchange')}
+          />
+          <EndOfPlay
             visible={optModalVisible}
             onClose={() => setOptModalVisible(!optModalVisible)}
             onPress={navigateToScanCode}
-          /> */}
+          />
         </View>
       </ImageBackground>
     </View>

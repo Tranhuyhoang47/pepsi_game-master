@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
-  SafeAreaView,
   View,
   Text,
   Dimensions,
@@ -14,9 +13,10 @@ import LogoutPopup from '../navigations/popups/exit_popup';
 import {
   decrementExchange,
   decrementFree,
-} from '../../redux/play';
+} from '../../redux/slices/authorized';
 import {useSelector, useDispatch} from 'react-redux';
-import {RootState} from '../../redux/synthetic';
+import {getReward} from '../../redux/action/authorized.actions';
+import {RootState} from '../../redux/store';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -25,28 +25,42 @@ const gamePlay: React.FC = (props: any) => {
   const {navigation} = props;
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const playType = useSelector(
-    (state: RootState) => state.timeplay.current_play_type,
+    (state: RootState) => state.authorized.current_play_type,
   );
   const playTimesExchange = useSelector(
-    (state: RootState) => state.timeplay.timeplay_exchange,
+    (state: RootState) => state.authorized.user.play_time_exchange,
   );
   const playTimesFree = useSelector(
-    (state: RootState) => state.timeplay.timeplay_free,
+    (state: RootState) => state.authorized.user.play_time_free,
   );
 
+  const reward = useSelector((state: RootState) => state.authorized.reward);
   const dispatch = useDispatch();
 
-  const onFinish = () => {
-    if (playType === 'exchange') {
-      dispatch(decrementExchange());
-      navigation.navigate('');
-    } else if (playType === 'free') {
-      dispatch(decrementFree());
-      navigation.navigate('');
-    } else {
-      navigation.navigate('');
+  useEffect(() => {
+    handleGetRewardComplete();
+  }, [reward]);
+
+  const handleGetRewardComplete = () => {
+    // console.log('reward:', reward);
+
+    if (reward != null && reward !== undefined) {
+      if (playType === 'exchange') {
+        dispatch(decrementExchange());
+        navigation.navigate('Congratulation');
+      } else if (playType === 'free') {
+        dispatch(decrementFree());
+        navigation.navigate('Congratulation');
+      } else {
+        navigation.navigate('Main screen');
+      }
     }
   };
+
+  const onFinish = () => {
+    dispatch(getReward());
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -91,7 +105,6 @@ const gamePlay: React.FC = (props: any) => {
           visible={logoutModalVisible}
           onPressConfirm={() => {
             setLogoutModalVisible(!logoutModalVisible);
-            navigation.popToTop();
           }}
           onPressCanel={() => setLogoutModalVisible(!logoutModalVisible)}
         />

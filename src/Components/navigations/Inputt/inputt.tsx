@@ -21,6 +21,10 @@ export interface TextInputFieldProps {
   numKeyboard?: boolean;
   inputProps?: TextInputProps;
   ref?: any;
+  value?: any;
+  onChangeTx?: any;
+  multiLine?: boolean;
+  isInputInValid?: boolean;
 }
 
 const TextInputt: React.FC<TextInputFieldProps> = props => {
@@ -30,6 +34,8 @@ const TextInputt: React.FC<TextInputFieldProps> = props => {
     errorLabel,
     placeholder,
     numKeyboard,
+    value,
+    onChangeTx,
     inputProps = {},
   } = props;
 
@@ -38,6 +44,8 @@ const TextInputt: React.FC<TextInputFieldProps> = props => {
       <View style={styles.inputContainer}>
         <TextInput
           {...inputProps}
+          onChangeText={onChangeTx}
+          value={value}
           style={styles.inputStyle}
           keyboardType={numKeyboard ? 'numeric' : 'default'}
           placeholder={placeholder}

@@ -1,34 +1,73 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Text,
-  SafeAreaView,
   View,
   StyleSheet,
   Dimensions,
-  Alert,
   TextInput,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import BtNotification from '../navigations/Button/bt';
-import {Button_white, Background,Button_off,} from '../../assets/images/index';
+import Clickbutton from '../../Components/navigations/Button/clickbutton';
+import {Background} from '../../assets/images';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux/store';
+import {
+  verifyOtp,
+  requestOtp,
+} from '../../redux/action/authentication.actions';
+import TextButton from '../../Components/navigations/Button/TxButton';
+import auth from '@react-native-firebase/auth';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const VerifyOtp: React.FC = (props: any) => {
   const {navigation} = props;
-  const [otp, setOtp] = useState(new Array(4).fill(''));
+  const {phone_number} = props.route.params;
+  const [otp, setOtp] = useState(new Array(6).fill(''));
   const [wrongOtp, setWrongOtp] = useState(false);
   const [codeFilled, setCodeFilled] = useState(false);
+  const dispatch = useDispatch();
+  const otpConfirmation = useSelector(
+    (state: RootState) => state.authentication.otpConfirmation,
+  );
+  const isOtpValid = useSelector(
+    (state: RootState) => state.authentication.isOtpValid,
+  );
+  const verifyOtpFailureNote = useSelector(
+    (state: RootState) => state.authentication.verifyOtpFailureNote,
+  );
+
   const passcode1Ref = useRef();
   const passcode2Ref = useRef();
   const passcode3Ref = useRef();
   const passcode4Ref = useRef();
-  //   const passcodeRefs = useRef([true, false, false, false]);
+  const passcode5Ref = useRef();
+  const passcode6Ref = useRef();
 
-  const checkCodeFilled = (otpCode: any[]) => {
-    let notFilled = otpCode.filter((item: string) => item === '');
+  useEffect(() => {
+    handleOtpVerificationConplete();
+  }, [isOtpValid]);
+
+  useEffect(() => {
+    handleWrongOtp();
+  }, [verifyOtpFailureNote]);
+
+  const handleOtpVerificationConplete = () => {
+    if (isOtpValid === true) {
+      navigation.navigate('gamePlay');
+    }
+  };
+
+  const handleWrongOtp = () => {
+    if (verifyOtpFailureNote === 'wrong otp code') {
+      setWrongOtp(true);
+    }
+  };
+
+  const checkCodeFilled = otpCode => {
+    let notFilled = otpCode.filter(item => item === '');
 
     if (notFilled.length === 0) {
       setCodeFilled(true);
@@ -44,86 +83,146 @@ const VerifyOtp: React.FC = (props: any) => {
     checkCodeFilled(newOtp);
   };
 
-  const verifyOtp = () => {
-    Alert.alert('You pressed otp: ', otp.join(''));
+  const handleVerifyOtp = async () => {
+    // try {
+    //   let res = await confirm.confirm(otp.join(''));
+    //   console.log('res: ', res);
+
+    //   navigation.navigate('Main screen');
+    // } catch (error) {
+    //   console.log('error: ', error);
+
+    //   setWrongOtp(true);
+    // }
+    dispatch(verifyOtp({otp: otp.join(''), confirm: otpConfirmation}));
+  };
+
+  const handleResendOTP = (phoneNumber: string) => {
+    dispatch(requestOtp(phoneNumber));
   };
 
   return (
-  <ImageBackground source={Background}
-    style={styles.fullScreenContainer}
-  >
-    <SafeAreaView style={styles.fullScreenContainer}>
-      
-      <View style={styles.greetingContainer}>
-        <Text style={styles.textWelcome}>{'Hey, chào mừng bạn đến với'}</Text>
-        <Text style={styles.textTitle}>{'Pepsi Tết'}</Text>
-      </View>
-      <View style={styles.functionContainer}>
-        <Text style={styles.textFunction}>{'Xác minh OTP'}</Text>
-        <Text style={styles.textPhoneNumber}>
-          {'Nhập mã OTP vừa được gửi đến điện thoại của bạn'}
-        </Text>
-        <KeyboardAwareScrollView>
-          <View style={styles.otpContainer}>
-            <TextInput
-               ={passcode1Ref}
-              style={
-                wrongOtp
-                  ? styles.passcodeContainerIncorrect
-                  : styles.passcodeContainer
-              }
-              onChangeText={value => {
-                handleChange(value, 0);
-                if (value != '') passcode2Ref.current.focus();
-              }}
-              maxLength={1}
-            />
-            <TextInput
-              ref={passcode2Ref}
-              style={
-                wrongOtp
-                  ? styles.passcodeContainerIncorrect
-                  : styles.passcodeContainer
-              }
-              onChangeText={value => {
-                handleChange(value, 1);
-                if (value != '') passcode3Ref.current.focus();
-              }}
-              maxLength={1}
-            />
-            <TextInput
-              ref={passcode3Ref}
-              style={
-                wrongOtp
-                  ? styles.passcodeContainerIncorrect
-                  : styles.passcodeContainer
-              }
-              onChangeText={value => {
-                handleChange(value, 2);
-                if (value != '') passcode4Ref.current.focus();
-              }}
-              maxLength={1}
-            />
-            <TextInput
-              ref={passcode4Ref}
-              style={
-                wrongOtp
-                  ? styles.passcodeContainerIncorrect
-                  : styles.passcodeContainer
-              }
-              onChangeText={value => handleChange(value, 3)}
-              maxLength={1}
-            />
-          </View>
-          <BtNotification
-            title={'Xác nhận'}
-            onPress={verifyOtp}
-            disabled={!codeFilled}
-          />
-        </KeyboardAwareScrollView>
-      </View>
-    </SafeAreaView>
+    <View style={styles.fullScreenContainer}>
+      <ImageBackground
+        source={Background}
+        resizeMode="cover"
+        style={styles.fullScreenContainer}>
+        <View style={styles.greetingContainer}>
+          <Text style={styles.textWelcome}>{'Hey, chào mừng bạn đến với'}</Text>
+          <Text style={styles.textTitle}>{'Pepsi Tết'}</Text>
+        </View>
+        <View style={styles.functionContainer}>
+          <Text style={styles.textFunction}>{'Xác minh OTP'}</Text>
+          <Text style={styles.textInstruction}>
+            {wrongOtp
+              ? 'Mã OTP không đúng, vui lòng nhập lại!'
+              : 'Nhập mã OTP vừa được gửi đến điện thoại của bạn'}
+          </Text>
+          <KeyboardAwareScrollView>
+            <View style={styles.otpContainer}>
+              <TextInput
+                ref={passcode1Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => {
+                  handleChange(value, 0);
+                  if (value != '') passcode2Ref.current.focus();
+                }}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+              <TextInput
+                ref={passcode2Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => {
+                  handleChange(value, 1);
+                  if (value != '') passcode3Ref.current.focus();
+                }}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+              <TextInput
+                ref={passcode3Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => {
+                  handleChange(value, 2);
+                  if (value != '') passcode4Ref.current.focus();
+                }}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+              <TextInput
+                ref={passcode4Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => {
+                  handleChange(value, 3);
+                  if (value != '') passcode5Ref.current.focus();
+                }}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+              <TextInput
+                ref={passcode5Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => {
+                  handleChange(value, 4);
+                  if (value != '') passcode6Ref.current.focus();
+                }}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+              <TextInput
+                ref={passcode6Ref}
+                style={
+                  wrongOtp
+                    ? styles.passcodeContainerIncorrect
+                    : styles.passcodeContainer
+                }
+                onChangeText={value => handleChange(value, 5)}
+                maxLength={1}
+                keyboardType="number-pad"
+              />
+            </View>
+            <View style={{marginTop: windowHeight * 0.035}}>
+              <Clickbutton
+                title={'Xác nhận'}
+                onPress={handleVerifyOtp}
+                disabled={!codeFilled}
+              />
+            </View>
+            <View style={styles.viewResendOTP}>
+              <Text style={styles.textResendOTP}>
+                {'Bạn chưa nhận được mã? '}
+              </Text>
+              <TextButton
+                title={'Gửi lại mã'}
+                titleStyle={styles.textButtonResendOTP}
+                onPress={() => handleResendOTP(phone_number)}
+              />
+            </View>
+          </KeyboardAwareScrollView>
+        </View>
       </ImageBackground>
+    </View>
   );
 };
 
@@ -136,13 +235,13 @@ const styles = StyleSheet.create({
   },
   greetingContainer: {
     flex: 25,
-    backgroundColor: '#035efc',
+    // backgroundColor: '#035efc',
     paddingTop: windowHeight * 0.1,
     alignItems: 'center',
   },
   functionContainer: {
     flex: 75,
-    backgroundColor: '#035efc',
+    // backgroundColor: '#035efc',
     paddingHorizontal: windowWidth * 0.05,
   },
   textWelcome: {
@@ -153,10 +252,10 @@ const styles = StyleSheet.create({
   otpContainer: {
     flexDirection: 'row',
     alignContent: 'stretch',
-    width: '70%',
+    width: '90%',
     alignSelf: 'center',
     justifyContent: 'space-between',
-    marginTop: windowHeight * 0.01,
+    marginTop: windowHeight * 0.05,
   },
   passcodeContainer: {
     width: windowWidth * 0.12,
@@ -172,6 +271,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: 'white',
     borderRadius: 5,
+    textAlign: 'center',
   },
   textTitle: {
     fontSize: 40,
@@ -179,13 +279,13 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   textFunction: {
-    fontSize: 20,
-    fontWeight: '400',
+    fontSize: 25,
+    fontWeight: 'bold',
     color: 'white',
     alignSelf: 'center',
   },
-  textPhoneNumber: {
-    fontSize: 12,
+  textInstruction: {
+    fontSize: 14,
     fontWeight: '400',
     color: 'white',
     alignSelf: 'center',
@@ -210,6 +310,18 @@ const styles = StyleSheet.create({
     color: '#0063A7',
     fontSize: 25,
     alignSelf: 'center',
+  },
+  viewResendOTP: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  textResendOTP: {
+    fontSize: 16,
+    color: 'white',
+  },
+  textButtonResendOTP: {
+    fontSize: 16,
+    color: 'yellow',
   },
 });
 
