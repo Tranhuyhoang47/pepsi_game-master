@@ -18,7 +18,7 @@ import {
     coinbadge,
 } from '../../assets/images';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/synthetic';
+import {RootState} from '../../redux/store';
 import {updateUser} from '../../redux/actions/authorized.actions';
 import {resetReward} from '../../redux/play';
 import { signOut } from '../../redux/actions/authentication.actions';
@@ -31,8 +31,8 @@ const Congratulation: React.FC = (props: any) => {
   const {navigation} = props;
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const reward = useSelector((state: RootState) => state.timeplay.reward);
-  const user = useSelector((state: RootState) => state.timeplay.user);
+  const reward = useSelector((state: RootState) => state.authorized.reward);
+  const user = useSelector((state: RootState) => state.authorized.user);
 
   const getRewardImage = (name: string) => {
     // console.log('name: ', name);

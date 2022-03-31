@@ -51,11 +51,7 @@ const SignIn: React.FC = (props: any) => {
         >
         <ClickButton
           title="Lấy mã OTP"
-<<<<<<< HEAD
-          onPress={() => navigation.navigate('gamePlay')}
-=======
           onPress={() => navigation.navigate('Home_Screens')}
->>>>>>> d9eb45ead3ac22e5b1676af893770c137749fc92
         />
         </ImageBackground>
         </View>

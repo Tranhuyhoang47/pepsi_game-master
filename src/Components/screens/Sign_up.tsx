@@ -131,11 +131,7 @@ const SignUp: React.FC = (props: any) => {
               // Alert.alert(
               //   `You signed up with information: ${values.phoneNumber} and ${values.userName}`,
               // );
-<<<<<<< HEAD
-              // handleSignUp(values.phoneNumber, values.userName);
-=======
               navigation.navigate('');
->>>>>>> d9eb45ead3ac22e5b1676af893770c137749fc92
             }}>
             {formik => (
               <KeyboardAwareScrollView>
