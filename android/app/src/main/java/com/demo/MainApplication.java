@@ -30,12 +30,19 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
           return packages;
         }
+<<<<<<< HEAD
         
         @Override
           protected JSIModulePackage getJSIModulePackage() { 
           return new ReanimatedJSIModulePackage(); 
         }
 
+=======
+        @Override
+          protected JSIModulePackage getJSIModulePackage() { 
+        return new ReanimatedJSIModulePackage(); 
+        }
+>>>>>>> d9eb45ead3ac22e5b1676af893770c137749fc92
 
         @Override
         protected String getJSMainModuleName() {

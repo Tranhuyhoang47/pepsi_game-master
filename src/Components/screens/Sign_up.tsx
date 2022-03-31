@@ -120,8 +120,7 @@ const SignUp: React.FC = (props: any) => {
         resizeMode="cover"
         style={styles.fullScreenContainer}>
         <View style={styles.greetingContainer}>
-          <Text style={styles.textWelcome}>{'Hey, chào mừng bạn đến với'}</Text>
-          <Text style={styles.textTitle}>{'Pepsi Tết'}</Text>
+          <Text style={styles.textTitle}>{'Lovely House'}</Text>
         </View>
         <View style={styles.functionContainer}>
           <Text style={styles.textFunction}>{'Đăng ký'}</Text>
@@ -132,7 +131,11 @@ const SignUp: React.FC = (props: any) => {
               // Alert.alert(
               //   `You signed up with information: ${values.phoneNumber} and ${values.userName}`,
               // );
+<<<<<<< HEAD
               // handleSignUp(values.phoneNumber, values.userName);
+=======
+              navigation.navigate('');
+>>>>>>> d9eb45ead3ac22e5b1676af893770c137749fc92
             }}>
             {formik => (
               <KeyboardAwareScrollView>
@@ -228,23 +231,25 @@ const styles = StyleSheet.create({
     paddingHorizontal: windowWidth * 0.05,
   },
   textWelcome: {
-    fontSize: 20,
+    top:16,
+    fontSize: 25,
     fontWeight: '400',
-    color: 'white',
+    color: '#3F8EF0',
   },
   textTitle: {
     fontSize: 40,
+    top:50,
     fontWeight: '400',
-    color: 'white',
+    color: '#000000',
   },
   textFunction: {
     fontSize: 20,
     fontWeight: '400',
-    color: 'white',
+    color: '#000000',
     alignSelf: 'center',
   },
   textOr: {
-    color: 'white',
+    color: '#3F8EF0',
     alignSelf: 'center',
   },
   buttonSignUp: {

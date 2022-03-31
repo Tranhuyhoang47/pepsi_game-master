@@ -28,6 +28,7 @@ const gamePlay: React.FC = (props: any) => {
     (state: RootState) => state.authorized.current_play_type,
   );
   const playTimesExchange = useSelector(
+<<<<<<< HEAD
     (state: RootState) => state.authorized.user.play_time_exchange,
   );
   const playTimesFree = useSelector(
@@ -54,8 +55,29 @@ const gamePlay: React.FC = (props: any) => {
       } else {
         navigation.navigate('Main screen');
       }
+=======
+    (state: RootState) => state.timeplay.user.timeplay_exchange,
+  );
+  const playTimesFree = useSelector(
+    (state: RootState) => state.timeplay.user.timeplay_free,
+  );
+
+
+  const dispatch = useDispatch();
+
+  const onFinish = () => {
+    if (playType === 'exchange') {
+      dispatch(decrementExchange());
+      navigation.navigate('Congratulation');
+    } else if (playType === 'free') {
+      dispatch(decrementFree());
+      navigation.navigate('Congratulation');
+    } else {
+      navigation.navigate('Congratulation');
+>>>>>>> d9eb45ead3ac22e5b1676af893770c137749fc92
     }
   };
+  
 
   const onFinish = () => {
     dispatch(getReward());
